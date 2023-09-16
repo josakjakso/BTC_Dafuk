@@ -1,0 +1,28 @@
+﻿@model BTC;
+@{
+    ViewData["Title"] = "Deposit";
+}
+
+<h1 class="text-center">ฝากเงิน</h1>
+
+@{
+    double totalUSD = 0; 
+}
+@foreach (var usd in ViewBag.AllUSD) 
+{
+    totalUSD += usd.USD; 
+}
+<p>@totalUSD : USD</p>
+<form method="post" asp-controller="BTC" asp-action="Deposit">
+    <div class="form-group">
+        <label asp-for="USD"></label>
+        <input type="number" asp-for="USD" class="form-control" step="0.00000000000001" min="0" required />
+    </div>
+    <button type="submit" class="btn btn-danger my-2">เข้าสู่เกมแห่งความมืด</button>
+    <td><a class="btn btn-primary" asp-controller="BTC" asp-action="Index">กลับๆๆ</a></td>
+
+   
+</form>
+
+
+

@@ -1,0 +1,49 @@
+﻿@model BTC;
+
+@{
+    ViewData["Title"] = "Buy";
+}
+
+<h1 class="text-center">Buy</h1>
+@{
+    double totalUSD = 0;
+    double totalBTC = 0;
+}
+@foreach (var usd in ViewBag.AllUSD)
+{
+    totalUSD += usd.USD;
+    totalBTC += usd.BTCUSD;
+
+
+}
+<p>@totalUSD : USD</p>
+<p>@totalBTC : COIN</p>
+
+<form method="post" asp-controller="BTC" asp-action="Buy" onsubmit="return validateInput()">
+    <div class="form-group">
+        <label>ต้องการซื้อ BTC ที่ราคา</label>
+        <input type="number" id="price" name="price" class="form-control" step="0.00000000000001" min="0.00000000000001" required />
+        <label>ต้องการซื้อ BTC จำนวน</label>
+        <input type="number" id="volum" name="volum" class="form-control" step="0.000001" min="0.000001" required />
+    </div>
+    <button type="submit" class="btn btn-danger my-2">เข้าสู่เกมแห่งความมืด</button>
+    <td><a class="btn btn-primary" asp-controller="BTC" asp-action="Index">กลับๆๆ</a></td>
+</form>
+
+<script>
+    function validateInput() {
+        var inputPrice = parseFloat(document.getElementById("price").value);
+        var inputVolum = parseFloat(document.getElementById("volum").value);
+        var totalUSD = @totalUSD;
+
+        var buyPrice = inputPrice * inputVolum;
+
+        if (buyPrice > totalUSD) {
+            alert('คุณไม่สามารถซื้อ BTC มากกว่ายอดเงินทั้งหมด ' + totalUSD + ' USD');
+            return false;
+        }
+        return true;
+    }
+</script>
+
+

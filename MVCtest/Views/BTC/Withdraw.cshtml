@@ -1,0 +1,34 @@
+﻿@model BTC;
+@{
+    ViewData["Title"] = "Withdraw";
+}
+
+<h1 class="text-center">ถอนเงิน</h1>
+@{
+    double totalUSD = 0;
+}
+@foreach (var usd in ViewBag.AllUSD)
+{
+    totalUSD += usd.USD;
+}
+<p>@totalUSD : USD</p>
+
+<form method="post" asp-controller="BTC" asp-action="Withdraw" onsubmit="return validateInput()">
+    <div class="form-group">
+        <label asp-for="USD"></label>
+        <input type="number" id="usdInput" name="USD" class="form-control" step="0.00000000001" min="0" required />
+    </div>
+    <button type="submit" class="btn btn-danger my-2">ถอนสิรอไร</button>
+    <td><a class="btn btn-primary" asp-controller="BTC" asp-action="Index">กลับๆๆ</a></td>
+</form>
+
+<script>
+    function validateInput() {
+        var inputUSD = parseFloat(document.getElementById('usdInput').value);
+        if (inputUSD > @totalUSD) {
+            alert('คุณไม่สามารถถอนเงินมากกว่าค่าทั้งหมด ' + @totalUSD + ' USD');
+            return false;
+        }
+        return true;
+    }
+</script>

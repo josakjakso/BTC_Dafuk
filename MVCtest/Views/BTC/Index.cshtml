@@ -1,0 +1,30 @@
+﻿@model IEnumerable<MVCtest.Models.BTC>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-center" style="color:orange">BTCtoTheMoon</h1>
+
+
+
+@if (Model.Any())
+{
+    double totalUSD = Model.Sum(btc => btc.USD);
+    double totalBTC = Model.Sum(btc => btc.BTCUSD);
+    double total = Model.Sum(btc => btc.Total);
+    <p>Total USD: @totalUSD USD</p>
+    <p>Total BTC: @totalBTC COIN</p>
+    <p>Total กำไร: @total USD</p>
+}
+
+<td><a class="btn btn-success" asp-controller="BTC" asp-action="Deposit">ฝากเงิน</a></td>
+<td><a class="btn btn-warning" asp-controller="BTC" asp-action="Withdraw">ถอนเงิน</a></td>
+<td><a class="btn btn-success" asp-controller="BTC" asp-action="Buy">ซื้อ</a></td>
+<td><a class="btn btn-danger" asp-controller="BTC" asp-action="Sell">ขาย</a></td>
+<td><a class="btn btn-danger" asp-controller="BTC" asp-action="Reset">reset</a></td>
+
+
+
+
+
+
